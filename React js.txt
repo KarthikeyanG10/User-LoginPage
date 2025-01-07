@@ -1,0 +1,71 @@
+import { useState } from "react";
+import "./normal.css";
+
+function Loginpage(){
+    const[email,setEmail]=useState("");
+    const[password,setPassword]=useState("");
+
+    const[emailError,setEmailError]=useState("");
+    const[passwordError,setPasswordError]=useState("");
+
+    const validate=()=>{
+        if(!email){
+            setEmailError("Enter E-mail.");
+        }
+        else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/.test(email)){
+            setEmailError("Invaild E-mail.")
+        }
+        else{
+            setEmailError("");
+        }
+        if(!password){
+            setPasswordError("Enter Password.");
+        }
+        else if(password.length<6){
+            setPasswordError("Password must contain atleast 6 letters.");
+        }
+    }
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        validate();
+        if(!emailError && !passwordError){
+            console.log("Form has Submitted Successfully.");
+            console.log(email);
+            console.log(password);
+        }
+    }
+
+
+    const handleEmailChange=(e)=>{
+        setEmail(e.target.value);
+    }
+    const handlePasswordChange=(e)=>{
+        setPassword(e.target.value);
+    }
+
+
+
+
+
+    return(
+        <form onSubmit={handleSubmit}> 
+            <div id="container" >
+                <div>
+                    <label>UserName:</label>
+                    <input type="text" id="name" placeholder="Enter E-mail" value={email} onChange={handleEmailChange} required/>
+                    {emailError && <p style={{color:"red"}}>{emailError}</p>}
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" id="pass" placeholder="Enter Password" value={password} onChange={handlePasswordChange} required/>
+                    {passwordError && <p style={{color:"red"}}>{passwordError}</p>}
+                </div>
+                <div>
+                    <button>Login In</button>
+                </div>
+            </div>
+        </form>
+    )
+}
+
+export default Loginpage;
